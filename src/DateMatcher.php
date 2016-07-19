@@ -19,28 +19,39 @@ class DateMatcher
 
     public static function match($file_name, $type)
     {
-        if(!isset(self::$type_patterns[$type])) {
+        if (!isset(self::$type_patterns[$type])) {
             throw new \Exception("not support type " . $type);
         }
 
         $pattern = self::$type_patterns[$type];
 
-        if(preg_match($pattern, $file_name, $matches) == 0) {
+        if (preg_match($pattern, $file_name, $matches) == 0) {
             throw new \Exception("not match");
         }
 
-        if(count($matches) < 4) {
+        if (count($matches) < 2) {
             throw new \Exception("matches len error");
         }
 
+        // 年
         $year = $matches[1];
-        if($year < 100) {
+        if ($year < 100) {
             $year = substr(date("Y"), 0, 2) . $year;
         }
 
-        $month = $matches[2];
-        $day = $matches[3];
+        // 月
+        $month = 1;
+        if (isset($matches[2])) {
+            $month = $matches[2];
+        }
 
+        // 日
+        $day = 1;
+        if (isset($matches[3])) {
+            $day = $matches[3];
+        }
+
+        // 返回日期时间戳
         return strtotime($year . "-" . $month . "-" . $day);
     }
 }

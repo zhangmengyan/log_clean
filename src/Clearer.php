@@ -12,12 +12,13 @@ class Clearer
 {
     public function run(ConfModel $model)
     {
+        $logger = Log::getInstance();
         $path = $model->getDirectory();
         $my_dir = dir($path);
         $expire = $model->getExpire();
         $date_type = $model->getDateType();
 
-        echo "log_clean begin" . PHP_EOL;
+        $logger->info(sprintf("[%s] Clean Start", $model->getName()));
 
         while ($file = $my_dir->read()) {
             if ($file == "." || $file == "..") {
@@ -38,11 +39,15 @@ class Clearer
 
                 exec($cmd);
 
-                echo "delete file" . $delFile . PHP_EOL;
+                $logger->info(sprintf("[%s] delete %s", $model->getName(), $delFile));
+
             } catch (\Exception $e) {
+                $logger->warning(sprintf("[%s] exception %s", $model->getName(), $e->getMessage()));
                 continue;
             }
         }
+
+        $logger->info(sprintf("[%s] Clean Complete", $model->getName()));
     }
 
     private function validDelFile($delFile)
