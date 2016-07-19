@@ -7,11 +7,12 @@
  * Time: 10:54
  */
 
-namespace LogClean;
+require_once dirname(__FILE__) . "/../vendor/autoload.php";
 
-class Bootstrap
-{
-    public function run($conf) {
-        Executor::execute($conf);
-    }
-}
+define("SRC_ROOT", __DIR__);
+define("CONF_PATH", SRC_ROOT . "/../etc");
+define("LOG_ROOT", SRC_ROOT . "/../logs");
+
+ini_set("display_errors", "1");
+ini_set("date.timezone", "PRC");
+

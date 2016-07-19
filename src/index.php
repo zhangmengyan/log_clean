@@ -6,18 +6,11 @@
  * Time: 10:50
  */
 
-use LogClean\Bootstrap;
+use LogClean\Executor;
 
-require_once dirname(__FILE__) . "/../vendor/autoload.php";
-
-define("SRC_ROOT", __DIR__);
-define("CONF_PATH", SRC_ROOT . "/../etc");
+require_once dirname(__FILE__) . "/bootstrap.php";
 
 $opt = getopt("", array("conf::"));
 $conf = isset($opt['conf']) ? $opt['conf'] : "default.ini";
 
-ini_set("display_errors", "1");
-ini_set("date.timezone", "PRC");
-
-$boot_strap = new Bootstrap();
-$boot_strap->run($conf);
+Executor::execute($conf);

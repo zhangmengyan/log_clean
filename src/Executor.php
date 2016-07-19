@@ -13,6 +13,7 @@ class Executor
 {
     public static function execute($conf)
     {
+        $logger = Log::getInstance();
         try {
             $configure = Configure::getInstance($conf);
             $clear = new Clearer();
@@ -21,7 +22,7 @@ class Executor
             }
 
         } catch (\Exception $e) {
-            echo $e->getMessage();
+            $logger->error(sprintf("execute with error: " . $e->getMessage()));
         }
     }
 }
