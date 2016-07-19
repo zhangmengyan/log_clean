@@ -26,11 +26,11 @@ class DateMatcher
         $pattern = self::$type_patterns[$type];
 
         if (preg_match($pattern, $file_name, $matches) == 0) {
-            throw new \Exception("not match");
+            throw new \Exception("not match filename:" . $file_name);
         }
 
         if (count($matches) < 2) {
-            throw new \Exception("matches len error");
+            throw new \Exception("matches len error : " . implode(";", $matches));
         }
 
         // 年
