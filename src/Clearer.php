@@ -25,6 +25,10 @@ class Clearer
                 continue;
             }
 
+            if(strpos($file, ".") == 0) {
+                continue;
+            }
+
             try {
                 if (!$this->isMatch($file, $date_type, $expire)) {
                     continue;
